@@ -38,8 +38,25 @@ export function generateDefaultTextStyles (baseFontSize = BASE_FONT_SIZE) {
             color: '#245dc1'
         },
         h1: _generateHeadingStyle(baseFontSize, 2, 0.67),
-        h2: _generateHeadingStyle(baseFontSize, 1.5, 0.83),
-        h3: _generateHeadingStyle(baseFontSize, 1.17, 1),
+        h2: {
+            ..._generateHeadingStyle(baseFontSize, 1.2, 0.83),
+            ...{
+                // display: 'flex',
+                // borderWidth: 2,
+                // borderTopWidth: 0,
+                // borderRightWidth: 0,
+                // borderLeftWidth: 0,
+                // borderColor: '#2ecc71'
+                marginTop: baseFontSize * 1.5
+            }
+        },
+        h3: {
+            ..._generateHeadingStyle(baseFontSize, 1.17, 1),
+            ...{
+                color: '#2ecc71',
+                marginBottom: 0,
+            }
+        },
         h4: _generateHeadingStyle(baseFontSize, 1, 1.33),
         h5: _generateHeadingStyle(baseFontSize, 0.83, 1.67),
         h6: _generateHeadingStyle(baseFontSize, 0.67, 2.33),
@@ -55,7 +72,11 @@ export function generateDefaultTextStyles (baseFontSize = BASE_FONT_SIZE) {
         },
         p: {
             marginTop: baseFontSize,
-            marginBottom: baseFontSize
+            marginBottom: baseFontSize,
+            lineHeight: 30,
+        },
+        img: {
+            marginVertical: 10,
         }
     };
 }
