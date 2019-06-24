@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, WebView, Dimensions, Platform } from 'react-native';
+import { SelectableText } from '@astrocoders/react-native-selectable-text';
 import { _constructStyles, _getElementClassStyles } from './HTMLStyles';
 import HTMLImage from './HTMLImage';
 
@@ -120,10 +121,17 @@ export function item(htmlAttribs, children, convertedCSSStyles, passProps) {
         htmlAttribs,
         passProps
     });
+
+    const { onSelect } = passProps;
     
     return (
-        // <Text {...passProps} style={style}>- {children}</Text>
-        <Text {...passProps} style={style}>*  {children}</Text>
+        <SelectableText
+            {...passProps}
+            style={style}
+            menuItems={["یادداشت برداری"]}
+            onSelection={({ eventType, content, selectionStart, selectionEnd }) => onSelect ? onSelect() : false}
+            value={<Text>*  {children}</Text>}
+        />
     );
 }
 
@@ -133,10 +141,37 @@ export function itemb(htmlAttribs, children, convertedCSSStyles, passProps) {
         htmlAttribs,
         passProps
     });
+
+    const { onSelect } = passProps;
     
     return (
-        // <Text {...passProps} style={style}>- {children}</Text>
-        <Text {...passProps} style={style}>*  {children}</Text>
+        <SelectableText
+            {...passProps}
+            style={style}
+            menuItems={["یادداشت برداری"]}
+            onSelection={({ eventType, content, selectionStart, selectionEnd }) => onSelect ? onSelect() : false}
+            value={<Text>*  {children}</Text>}
+        />
+    );
+}
+
+export function p(htmlAttribs, children, convertedCSSStyles, passProps) {
+    const style = _constructStyles({
+        tagName: 'p',
+        htmlAttribs,
+        passProps
+    });
+
+    const { onSelect } = passProps;
+    
+    return (
+        <SelectableText
+            {...passProps}
+            style={style}
+            menuItems={["یادداشت برداری", "اشتراک گذاری"]}
+            onSelection={({ eventType, content, selectionStart, selectionEnd }) => onSelect ? onSelect(eventType, content) : false}
+            value={children}
+        />
     );
 }
 

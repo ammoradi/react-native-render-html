@@ -47,7 +47,7 @@ export default class HTML extends PureComponent {
         emSize: PropTypes.number.isRequired,
         ptSize: PropTypes.number.isRequired,
         baseFontStyle: PropTypes.object.isRequired,
-        textSelectable: PropTypes.bool,
+        onSelect: PropTypes.bool,
         renderersProps: PropTypes.object
     }
 
@@ -64,7 +64,7 @@ export default class HTML extends PureComponent {
         baseFontStyle: { fontSize: 14 },
         tagsStyles: {},
         classesStyles: {},
-        textSelectable: false
+        onSelect: () => { }
     }
 
     constructor (props) {
@@ -444,9 +444,8 @@ export default class HTML extends PureComponent {
                           ignoredStyles,
                           allowedStyles
                       })}
-                  onLongPress={() => this.props.onSelect && this.props.onSelect(textElement.props.children)}
                 >
-                    { data }
+                  { data }
                 </Text> :
                 false;
 
@@ -460,7 +459,7 @@ export default class HTML extends PureComponent {
 
             const renderersProps = {};
             if (Wrapper === Text) {
-                renderersProps.selectable = this.props.textSelectable;
+                renderersProps.onSelect = this.props.onSelect;
             }
             return (
                 <Wrapper key={key} style={style} {...renderersProps}>
