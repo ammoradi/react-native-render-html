@@ -163,14 +163,7 @@ export function p(htmlAttribs, children, convertedCSSStyles, passProps) {
 
     const { onSelect } = passProps;
 
-    if (children.length === 1 && children[0][0].type.displayName === 'HTMLImage') return (
-        <View
-            {...passProps}
-            style={style}
-        >
-            {children}
-        </View>
-    )
+    if (children.length === 1 && children[0][0].type.displayName === 'HTMLImage') return children
     
     return (
         <SelectableText
