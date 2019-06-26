@@ -33,32 +33,6 @@ export function a (htmlAttribs, children, convertedCSSStyles, passProps) {
     }
 }
 
-export function img (htmlAttribs, children, convertedCSSStyles, passProps = {}) {
-    if (!htmlAttribs.src) {
-        return false;
-    }
-
-    const style = _constructStyles({
-        tagName: 'img',
-        htmlAttribs,
-        passProps,
-        styleSet: 'IMAGE'
-    });
-    const { src, alt, width, height } = htmlAttribs;
-    const nreSrc = src.includes("bookapo.com") ? src : 'file://' + src;
-    return (
-        <HTMLImage
-          source={{ uri: Platform.OS === 'android' ? nreSrc : src }}
-        //   source={{ uri: src }}
-          alt={alt}
-          width={width}
-          height={height}
-          style={style}
-          {...passProps}
-        />
-    );
-}
-
 export function ul (htmlAttribs, children, convertedCSSStyles, passProps = {}) {
     const style = _constructStyles({
         tagName: 'ul',
@@ -154,6 +128,7 @@ export function itemb(htmlAttribs, children, convertedCSSStyles, passProps) {
         />
     );
 }
+
 export function p(htmlAttribs, children, convertedCSSStyles, passProps) {
     const style = _constructStyles({
         tagName: 'p',
@@ -163,7 +138,11 @@ export function p(htmlAttribs, children, convertedCSSStyles, passProps) {
 
     const { onSelect } = passProps;
 
-    if (children.length === 1 && children[0][0].type.displayName === 'HTMLImage') return children
+    if (children.length === 1 && children[0][0].type.displayName === 'HTMLImage') {
+        const imgHtmlAttribs = { src: children[0][0].props.source.uri };
+        const imgPassProps = children[0][0].props
+        return img(imgHtmlAttribs, null, null, imgPassProps);
+    }
     
     return (
         <SelectableText
@@ -172,6 +151,32 @@ export function p(htmlAttribs, children, convertedCSSStyles, passProps) {
             menuItems={["یادداشت برداری", "اشتراک گذاری"]}
             onSelection={({ eventType, content, selectionStart, selectionEnd }) => onSelect ? onSelect(eventType, content) : false}
             value={children}
+        />
+    );
+}
+
+
+export function img (htmlAttribs, children, convertedCSSStyles, passProps = {}) {
+    if (!htmlAttribs.src) {
+        return false;
+    }
+
+    const style = _constructStyles({
+        tagName: 'img',
+        htmlAttribs,
+        passProps,
+        styleSet: 'IMAGE'
+    });
+    const { src, alt, width, height } = htmlAttribs;
+    const nreSrc = src.includes("bookapo.com") ? src : 'file://' + src;
+    return (
+        <HTMLImage
+          source={{ uri: Platform.OS === 'android' ? nreSrc : src }}
+          alt={alt}
+          width={width}
+          height={height}
+          style={style}
+          {...passProps}
         />
     );
 }
